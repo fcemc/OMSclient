@@ -265,13 +265,14 @@ function getSpinner() {
     spinner = new Spinner(opts).spin(target);
 }
 
-function cancelOtage() {
+function cancelOtage() {    
     $.mobile.pageContainer.pagecontainer("change", "#page1");
 }
 
 function clearAccount() {
     if(confirm("Delete current account?")){
         localStorage.clear();
+        $("#memberNumber").val("");
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
 }
