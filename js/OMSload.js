@@ -60,6 +60,7 @@ function getAccount() {
                 alert("There is an issue with you account, unalbe to add account. Please contact Four County EMC for assistance");
             }
             else if (result.MEMBERLISTResult.length > 0) {
+                memberData = [];
                 var results = result.MEMBERLISTResult;
                 for (var i = 0; i < results.length; i++) {
                     memberData.push({ NAME: results[i].NAME, MEMBERNO: results[i].MEMBERNO, MEMBERSEP: results[i].MEMBERSEP, BILLADDR: results[i].BILLADDR, SERVADDR: results[i].SERVADDR, PHONE: results[i].PHONE, MAPNUMBER: results[i].MAPNUMBER, METER: results[i].METER });
