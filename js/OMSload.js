@@ -184,60 +184,81 @@ function checkInOutage() {
 
 function reportmOtage(info) {
     $("#spinCont").show();
-    if (confirm("Are you sure you want to report an outage at this location?")) {
-        $("#spinCont").show();
-        var account = info.split(",")[0];
-        var meter = info.split(",")[1];
-        var phone = info.split(",")[2];
-        var grid = info.split(",")[3];
-        var cmnts = info.split(",")[4];
 
-        if (phone == "") {
-            phone = "blank";
-        }
-        if (account == "") {
-            account = "blank";
-        }
-        if (grid == "") {
-            grid = "blank";
-        }
-        if (meter == "") {
-            meter = "blank";
-        }
-        if (cmnts == "") {
-            cmnts = "blank";
-        }
-        else if (cmnts.indexOf("/") >= 0) {
-            cmnts = cmnts.replace(/\//g, "~");
-        }
+    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Confirmation", "Cancel, Ok");
 
-        var details = account + "/" + meter + "/" + phone + "/" + grid + "/" + cmnts;
 
-        $.ajax({
-            type: "GET",
-            async: false,
-            cache: false,
-            dataType: "json",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
-            success: function (results) {
-                if (results.REPORTOUTAGEResult == true) {
-                    $('#btn_' + account).text("Account in Current Outage")
-                    $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                    alert("Outage reported!");
-                }
-                else {
-                    alert("Account already in an existing outage");
-                }
-            }
-        });
-    }
-    else {
-        cancelOtage();
-        $("#spinCont").hide();
-    }
+    //$("#popupReportOutage").popup("open");
+    //$("#popupReportOutage").popup({
+    //    afterclose: function (event, ui) {
+    //        var a = event;
+    //    }
+    //});
+
+    //if (confirm("Are you sure you want to report an outage at this location?")) {
+    //    $("#spinCont").show();
+    //    var account = info.split(",")[0];
+    //    var meter = info.split(",")[1];
+    //    var phone = info.split(",")[2];
+    //    var grid = info.split(",")[3];
+    //    var cmnts = info.split(",")[4];
+
+    //    if (phone == "") {
+    //        phone = "blank";
+    //    }
+    //    if (account == "") {
+    //        account = "blank";
+    //    }
+    //    if (grid == "") {
+    //        grid = "blank";
+    //    }
+    //    if (meter == "") {
+    //        meter = "blank";
+    //    }
+    //    if (cmnts == "") {
+    //        cmnts = "blank";
+    //    }
+    //    else if (cmnts.indexOf("/") >= 0) {
+    //        cmnts = cmnts.replace(/\//g, "~");
+    //    }
+
+    //    var details = account + "/" + meter + "/" + phone + "/" + grid + "/" + cmnts;
+
+    //    $.ajax({
+    //        type: "GET",
+    //        async: false,
+    //        cache: false,
+    //        dataType: "json",
+    //        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
+    //        success: function (results) {
+    //            if (results.REPORTOUTAGEResult == true) {
+    //                $('#btn_' + account).text("Account in Current Outage")
+    //                $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
+    //                alert("Outage reported!");
+    //            }
+    //            else {
+    //                alert("Account already in an existing outage");
+    //            }
+    //        }
+    //    });
+    //}
+    //else {
+    //    cancelOtage();
+    //    $("#spinCont").hide();
+    //}
 
     $("#spinCont").hide();
 }
+
+function ouatageSumissionCallBack(button) {
+    if (button == 2) {        
+        alert("report canceled");
+    }
+    else if (button == 1) {
+        alert("report submitted");
+    }
+}
+
 
 function getSpinner() {
     var opts = {
