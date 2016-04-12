@@ -6,10 +6,10 @@
         id        = "com.fcemc.FCEMComsclient"
         version   = "1.0.0">
 
-  <name>FCEMC-OMS</name>
+  <name>FCEMC-OMS Members</name>
 
   <description>
-    Four County EMC - Mobile Outage Management Application
+    Four County EMC - Mobile Outage Management Application for Members
   </description>
 
   <author href="http://www.fcemc.org" email="jerrysimmons@fourcty.org">
