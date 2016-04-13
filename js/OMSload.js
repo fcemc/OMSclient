@@ -184,7 +184,7 @@ function checkInOutage() {
 
 function reportmOtage(info) {
     $("#spinCont").show();
-    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack(info), "Confirmation", "Cancel, Ok");
+    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack(button,info), "Confirmation", "Cancel, Ok");
 }
 
 function ouatageSumissionCallBack(button, info) {
