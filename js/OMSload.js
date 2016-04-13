@@ -1,5 +1,5 @@
 ﻿var tryingToReconnect = false, user;
-var memberData = [];
+var memberData = [], outageInfo;
 
 $(document).ready(function () {
     //adjust for status bar in iOS
@@ -184,12 +184,15 @@ function checkInOutage() {
 
 function reportmOtage(info) {
     $("#spinCont").show();
+    outageInfo = "";
+    outageInfo = info;
     var button;
-    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack(button,info), "Confirmation", "Cancel, Ok");
+    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Confirmation", "Cancel, Ok");
 }
 
-function ouatageSumissionCallBack(button, info) {
-    if (button == 2) {        
+function ouatageSumissionCallBack(button) {
+    if (button == 2) {
+        var info = outageInfo;
         var account = info.split(",")[0];
         var meter = info.split(",")[1];
         var phone = info.split(",")[2];
