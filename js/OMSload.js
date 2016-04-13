@@ -296,6 +296,7 @@ function doClearAccount(button) {
     if (button == 2) {
         localStorage.clear();
         $("#memberNumber").val("");
+        $("#memberPhone").val("");
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
 }
