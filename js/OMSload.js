@@ -32,13 +32,7 @@ $(document).ready(function () {
         };
     }
     else {
-        var r = confirm("No network connection detected, check setting and try again!");
-        if (r == true) {
-            window.location.reload();
-        }
-        else {
-            $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
-        }
+        navigator.notification.confirm("No network connection detected, check setting and try again!", networkIssue, "Please Confirm:", "Cancel, Ok");
     }
 });
 
@@ -56,8 +50,8 @@ function getAccount() {
         },
         success: function (result) {
             if (result.MEMBERLISTResult.length == 0) {
-                $("#memberNumber").val("");
-                alert("There is an issue with you account, unalbe to add account. Please contact Four County EMC for assistance");
+                $("#memberNumber").val("");                
+                navigator.notification.alert("There is an issue with you account, unalbe to add account. Please contact Four County EMC for assistance at 1-888.368.7289", "", "Error:", "Ok");
             }
             else if (result.MEMBERLISTResult.length > 0) {
                 memberData = [];
@@ -73,6 +67,7 @@ function getAccount() {
             $("#spinCont").hide();
         },
         error: function (textStatus, errorThrown) {
+            navigator.notification.alert("There was an issue in getting your account information, please try again or contact Four County EMC for assistance at 1-888.368.7289", "", "Error:", "Ok");
             var txt = textStatus;
             var et = errorThrown;
         }
@@ -186,7 +181,6 @@ function reportmOtage(info) {
     $("#spinCont").show();
     outageInfo = "";
     outageInfo = info;
-    var button;
     navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Please Confirm:", "Cancel, Ok");
 }
 
@@ -230,7 +224,7 @@ function ouatageSumissionCallBack(button) {
                 if (results.REPORTOUTAGEResult == true) {
                     $('#btn_' + account).text("Account in Current Outage")
                     $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                    navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");                    
+                    navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");
                     $("#spinCont").hide();
                 }
                 else {
@@ -245,10 +239,8 @@ function ouatageSumissionCallBack(button) {
     else if (button == 1) {
         cancelOtage();
         $("#spinCont").hide();
-    }        
+    }
 }
-
-
 
 function getSpinner() {
     var opts = {
@@ -277,14 +269,27 @@ function getSpinner() {
     spinner = new Spinner(opts).spin(target);
 }
 
-function cancelOtage() {    
+function cancelOtage() {
     $.mobile.pageContainer.pagecontainer("change", "#page1");
 }
 
 function clearAccount() {
-    if(confirm("Delete current account?")){
+    navigator.notification.confirm("Are you sure you want to remove this account?", doClearAccount, "Remove account:", "Cancel, Ok");
+}
+
+function doClearAccount(button) {
+    if (button == 2) {
         localStorage.clear();
         $("#memberNumber").val("");
         $.mobile.pageContainer.pagecontainer("change", "#page2");
+    }
+}
+
+function networkIssue(button) {
+    if (button == 2) {
+        window.location.reload();
+    }
+    else if (button == 1) {
+        $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
     }
 }
