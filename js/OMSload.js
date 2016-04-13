@@ -1,5 +1,5 @@
 ﻿var tryingToReconnect = false, user;
-var memberData = [], outageInfo, outageSent = false;
+var memberData = [], outageInfo;
 
 $(document).ready(function () {
     //adjust for status bar in iOS
@@ -243,24 +243,14 @@ function sendReportedOutage() {
             if (results.REPORTOUTAGEResult == true) {
                 $('#btn_' + account).text("Account in Current Outage")
                 $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                //navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");
-                outageSent = true;
+                navigator.notification.alert("Outage has been reported!", fakeCallback, "Success:", "Ok");
                 $("#spinCont").hide();
             }
             else {
                 $('#btn_' + account).text("Account in Current Outage")
                 $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                //navigator.notification.alert("Account already in an existing outage", "", "", "Ok");
-                outageSent = false;
+                navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification", "Ok");
                 $("#spinCont").hide();
-            }
-        },
-        complete: function (jqXHR, textStatus) {
-            if (outageSent) {
-                navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");
-            }
-            else {
-                navigator.notification.alert("Account already in an existing outage", "", "", "Ok");
             }
         }
     });
@@ -318,3 +308,5 @@ function networkIssue(button) {
         $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
     }
 }
+
+function fakeCallback(){}
