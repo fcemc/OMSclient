@@ -184,7 +184,6 @@ function checkInOutage() {
 
 function reportmOtage(info) {
     $("#spinCont").show();
-
     navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Confirmation", "Cancel, Ok");
 
 
@@ -251,10 +250,10 @@ function reportmOtage(info) {
 }
 
 function ouatageSumissionCallBack(button) {
-    if (button == 2) {        
+    if (button == 1) {        
         alert("report canceled");
     }
-    else if (button == 1) {
+    else if (button == 2) {
         alert("report submitted");
     }
 }
