@@ -37,25 +37,25 @@ $(document).ready(function () {
 });
 
 //region Login&Cookies
-function getAccount() {
-    var v = $("#memberNumber").val();
-    var paramItems = "MBRNO|" + v;
+function getAccount() {    
+    var paramItems = $("#memberNumber").val() + "|" + $("#memberPhone").val();
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/MEMBERLIST/" + paramItems,
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
         contentType: "application/json; charset=utf-8",
         cache: false,
         beforeSend: function () {
             $("#spinCont").show();
         },
         success: function (result) {
-            if (result.MEMBERLISTResult.length == 0) {
+            var results = result.VALMEMBERResult;
+            if (results.length == 0) {
                 $("#memberNumber").val("");                
                 navigator.notification.alert("There is an issue with you account, unalbe to add account. Please contact Four County EMC for assistance at 1-888.368.7289", "", "Error:", "Ok");
             }
-            else if (result.MEMBERLISTResult.length > 0) {
+            else if (results.length > 0) {
                 memberData = [];
-                var results = result.MEMBERLISTResult;
+                
                 for (var i = 0; i < results.length; i++) {
                     memberData.push({ NAME: results[i].NAME, MEMBERNO: results[i].MEMBERNO, MEMBERSEP: results[i].MEMBERSEP, BILLADDR: results[i].BILLADDR, SERVADDR: results[i].SERVADDR, PHONE: results[i].PHONE, MAPNUMBER: results[i].MAPNUMBER, METER: results[i].METER });
                 }
@@ -95,6 +95,16 @@ function checkCookie() {
     else {
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
+}
+
+function updateAccount() {
+    if (localStorage.fcemcMemberData !== undefined) {
+        var data = JSON.parse(localStorage.getItem("fcemcMemberData"));
+        $("#memberNumber").val(data[0].MEMBERNO);
+        $("#memberPhone").val(data[0].PHONE);
+        getAccount();
+    }
+
 }
 //endregion
 
@@ -186,61 +196,66 @@ function reportmOtage(info) {
 
 function ouatageSumissionCallBack(button) {
     if (button == 2) {
-        var info = outageInfo;
-        var account = info.split(",")[0];
-        var meter = info.split(",")[1];
-        var phone = info.split(",")[2];
-        var grid = info.split(",")[3];
-        var cmnts = info.split(",")[4];
-
-        if (phone == "") {
-            phone = "blank";
-        }
-        if (account == "") {
-            account = "blank";
-        }
-        if (grid == "") {
-            grid = "blank";
-        }
-        if (meter == "") {
-            meter = "blank";
-        }
-        if (cmnts == "") {
-            cmnts = "blank";
-        }
-        else if (cmnts.indexOf("/") >= 0) {
-            cmnts = cmnts.replace(/\//g, "~");
-        }
-
-        var details = account + "/" + meter + "/" + phone + "/" + grid + "/" + cmnts;
-
-        $.ajax({
-            type: "GET",
-            async: false,
-            cache: false,
-            dataType: "json",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
-            success: function (results) {
-                if (results.REPORTOUTAGEResult == true) {
-                    $('#btn_' + account).text("Account in Current Outage")
-                    $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                    navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");
-                    $("#spinCont").hide();
-                }
-                else {
-                    $('#btn_' + account).text("Account in Current Outage")
-                    $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                    navigator.notification.alert("Account already in an existing outage", "", "", "Ok");
-                    $("#spinCont").hide();
-                }
-            }
-        });
+        sendReportedOutage();
     }
     else if (button == 1) {
         cancelOtage();
         $("#spinCont").hide();
     }
 }
+
+function sendReportedOutage() {
+    var info = outageInfo;
+    var account = info.split(",")[0];
+    var meter = info.split(",")[1];
+    var phone = info.split(",")[2];
+    var grid = info.split(",")[3];
+    var cmnts = info.split(",")[4];
+
+    if (phone == "") {
+        phone = "blank";
+    }
+    if (account == "") {
+        account = "blank";
+    }
+    if (grid == "") {
+        grid = "blank";
+    }
+    if (meter == "") {
+        meter = "blank";
+    }
+    if (cmnts == "") {
+        cmnts = "blank";
+    }
+    else if (cmnts.indexOf("/") >= 0) {
+        cmnts = cmnts.replace(/\//g, "~");
+    }
+
+    var details = account + "/" + meter + "/" + phone + "/" + grid + "/" + cmnts;
+
+    $.ajax({
+        type: "GET",
+        async: false,
+        cache: false,
+        dataType: "json",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
+        success: function (results) {
+            if (results.REPORTOUTAGEResult == true) {
+                $('#btn_' + account).text("Account in Current Outage")
+                $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
+                navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");
+                $("#spinCont").hide();
+            }
+            else {
+                $('#btn_' + account).text("Account in Current Outage")
+                $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
+                navigator.notification.alert("Account already in an existing outage", "", "", "Ok");
+                $("#spinCont").hide();
+            }
+        }
+    });
+}
+
 
 function getSpinner() {
     var opts = {
