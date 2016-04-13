@@ -187,7 +187,7 @@ function reportmOtage(info) {
     outageInfo = "";
     outageInfo = info;
     var button;
-    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Confirmation", "Cancel, Ok");
+    navigator.notification.confirm("Are you sure you want to report an outage at this location?", ouatageSumissionCallBack, "Please Confirm:", "Cancel, Ok");
 }
 
 function ouatageSumissionCallBack(button) {
@@ -230,11 +230,13 @@ function ouatageSumissionCallBack(button) {
                 if (results.REPORTOUTAGEResult == true) {
                     $('#btn_' + account).text("Account in Current Outage")
                     $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                    alert("Outage reported!");
+                    navigator.notification.alert("Outage has been reported!", "", "Success:", "Ok");                    
                     $("#spinCont").hide();
                 }
                 else {
-                    alert("Account already in an existing outage");
+                    $('#btn_' + account).text("Account in Current Outage")
+                    $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
+                    navigator.notification.alert("Account already in an existing outage", "", "", "Ok");
                     $("#spinCont").hide();
                 }
             }
