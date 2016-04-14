@@ -35,7 +35,7 @@ $(document).ready(function () {
             "hideMethod": "fadeOut"
         }
 
-        var pushNotification = window.plugins.pushNotification;
+        
 
         $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
@@ -44,7 +44,7 @@ $(document).ready(function () {
         var mainChat = $.connection.mainHub;
         mainChat.client.broadcastMessage = function (data, option) {
 
-            pushNotification.setApplicationIconBadgeNumber("Test", 0);
+            cordova.plugins.notification.badge.set(10);
 
             console.log("Test");
 
