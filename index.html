@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>FCEMC-OMSClient</title>
+    <title>FCEMC-OMS</title>
 
     <link href="js/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
     <link href="css/MiniDashbaord.min.css" rel="stylesheet" />
@@ -20,6 +20,7 @@
     <script src="http://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="http://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
 
+    <script type="text/javascript" src="PushNotification.js"></script>
     <script src="phonegap.js"></script>
     <script src="cordova.js"></script>
 
@@ -29,33 +30,43 @@
         <div id="spinwheel"></div>
     </div>
 
-    <div class="pg" data-role="page" id="page1" >
-        <div class="hdr" data-role="header">
-            <h1>Accont Detail </h1>                        
-            <a onclick="clearAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"></a>
-            <a onclick="updateAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-recycle ui-btn-icon-right ui-btn-icon-notext ui-corner-all"></a>
+    <div class="pg" data-role="page" data-dialog="true" id="pageLogin" data-theme="a">
+        <div id="popupLoginWindow" style="padding:10px 20px;">
+            <h3>Please sign in</h3>
+            <label for="un" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+            <label for="pw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+            <a href="" onclick="checkLogin();" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="pop">Submit</a>
+            <label class="redbull" id="loginError"></label>
         </div>
-        <div role="main" class="ui-content">            
+        <div style="text-align:center">
+            <label id="err"></label>
+        </div>
+    </div>
+
+    <div class="pg" data-role="page" id="page1">
+        <div class="hdr" data-role="header">
+            <h1>FCEMC-OMS <a href="#" onclick="initLoad();" class="ui-btn ui-btn-inline ui-icon-recycle ui-btn-icon-notext">Icon only</a></h1>
+        </div>
+        <div role="main" class="ui-content">
             <div style="text-align:center;">
-                <div id="accnts"></div>
+                <div id="outage"></div>
+                <div id="scadaoutage"></div>
+            </div>
+            <div style="text-align:center;">
+
+                <div id='avls' data-role='collapsible-set'>
+                    <div data-role='collapsible'>
+                        <h3>AVL</h3>
+                        <div id="avl"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="pg" data-role="page" id="page2">
-        <div class="hdr" data-role="header">
-            <h1>Add Accont</h1>            
-        </div>
-        <div role="main" class="ui-content">
-            <div style="text-align:center;">
-                Enter Member Number: <input id="memberNumber" type="text" />
-                Enter Phone Number (Ex:9102591234): <input id="memberPhone" type="tel"/>
-                <input type="button" value="Submit" onclick="getAccount();" />
-            </div>
-        </div>
-    </div>
-
-    <div class="pg" data-role="page" id="page3">
         <div data-role="header">
             <h1>Close Outage</h1>
         </div>

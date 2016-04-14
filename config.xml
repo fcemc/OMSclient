@@ -3,13 +3,13 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
 		xmlns:android   = "http://schemas.android.com/apk/res/android"
-        id        = "com.fcemc.omsclient"
+        id        = "com.fcemc.FCEMComs"
         version   = "1.0.0">
 
-  <name>FCEMC-OMS Members</name>
+  <name>FCEMC-OMS</name>
 
   <description>
-    Four County EMC - Mobile Outage Management Application for Members
+    Four County EMC - Mobile Outage Management Application
   </description>
 
   <author href="http://www.fcemc.org" email="jerrysimmons@fourcty.org">
@@ -84,7 +84,7 @@
   <gap:plugin name="org.apache.cordova.splashscreen" />
   <gap:plugin name="org.apache.cordova.vibration" />
   <gap:plugin name="org.apache.cordova.statusbar" />
-  
+  <gap:plugin name="com.adobe.plugins.pushplugin" />
 
   
 
