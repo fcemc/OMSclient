@@ -14,14 +14,16 @@
     <link href="content/toastr.min.css" rel="stylesheet" />
 
     <link href="css/StyleSheet.css" rel="stylesheet" />
-    <script src="js/OMSload.js"></script>
-    <script src="js/jquery.spin.js"></script>
-
+    
     <script src="http://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="http://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
 
+    <script src="js/PushNotification.js"></script>
+    <script src="js/OMSload.js"></script>
+    <script src="js/jquery.spin.js"></script>
+
     <script src="phonegap.js"></script>
-    <script src="cordova.js"></script>
+    
 
 </head>
 <body>
@@ -29,13 +31,13 @@
         <div id="spinwheel"></div>
     </div>
 
-    <div class="pg" data-role="page" id="page1" >
+    <div class="pg" data-role="page" id="page1">
         <div class="hdr" data-role="header">
-            <h1>Accont Detail </h1>                        
+            <h1>Accont Detail </h1>
             <a onclick="clearAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"></a>
             <a onclick="updateAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-recycle ui-btn-icon-right ui-btn-icon-notext ui-corner-all"></a>
         </div>
-        <div role="main" class="ui-content">            
+        <div role="main" class="ui-content">
             <div style="text-align:center;">
                 <div id="accnts"></div>
             </div>
@@ -44,7 +46,7 @@
 
     <div class="pg" data-role="page" id="page2">
         <div class="hdr" data-role="header">
-            <h1>Add Accont</h1>            
+            <h1>Add Accont</h1>
         </div>
         <div role="main" class="ui-content">
             <div style="text-align:center;">
@@ -136,6 +138,12 @@
             <button style="background-color:red;" onclick="closeOtage();" class="ui-btn ui-corner-all">Close Outage</button>
         </div>
     </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
 
 </body>
 </html>
