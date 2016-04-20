@@ -59,7 +59,9 @@ function getAccount() {
                 for (var i = 0; i < results.length; i++) {
                     memberData.push({ NAME: results[i].NAME, MEMBERNO: results[i].MEMBERNO, MEMBERSEP: results[i].MEMBERSEP, BILLADDR: results[i].BILLADDR, SERVADDR: results[i].SERVADDR, PHONE: results[i].PHONE, MAPNUMBER: results[i].MAPNUMBER, METER: results[i].METER });
                 }
-                localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));
+
+                setCookie();
+
                 listAccounts();
             }
         },
@@ -74,9 +76,38 @@ function getAccount() {
     });
 }
 
-function setCookie(account, name, cnumber) {
-    window.localStorage.clear();
-    localStorage.setItem("fcemcMemberData", memberData);
+function setCookie() {
+    ////window.localStorage.clear();
+    localStorage.setItem("fcemcMemberData", "");
+    localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));
+    //registierDevice();
+}
+
+function registierDevice() {
+    localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");
+    localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")
+    localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");
+
+    if (localStorage.fcemcOMS_MEM_did != undefined) {
+        var _did = localStorage.fcemcOMS_MEM_did;
+        var _uuid = localStorage.fcemcOMS_MEM_uuid;
+        var _ct = localStorage.fcemcOMS_MEM_clientType;
+
+        var paramItems = _did + "|" + _uuid + "|" + _ct;
+        $.ajax({
+            type: "GET",
+            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGDEVICE/" + paramItems,
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (results) {
+                var r = results;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var e = errorThrown;                
+            }
+        });
+
+    }
 }
 
 function getCookie() {
