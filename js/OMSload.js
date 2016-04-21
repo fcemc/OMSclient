@@ -49,7 +49,6 @@ function getAccount() {
     //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
     //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
     
-
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
         paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/none/none/none";
@@ -57,9 +56,7 @@ function getAccount() {
     else {
         paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
     }
-
-
-    var paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
+            
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
