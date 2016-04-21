@@ -2,6 +2,12 @@
 var memberData = [], outageInfo;
 
 $(document).ready(function () {
+    ////window.localStorage.clear();        //for testing
+    //////$("#memberNumber").val("71547");    //for testing
+    //////$("#memberPhone").val("9102598499");//for testing
+    ////$("#memberNumber").val("57578");    //for testing
+    ////$("#memberPhone").val("9105322881");//for testing
+
     //adjust for status bar in iOS
     if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
         $("body").css("background-color", "black");
@@ -37,8 +43,23 @@ $(document).ready(function () {
 });
 
 //region Login&Cookies
-function getAccount() {    
-    var paramItems = $("#memberNumber").val() + "|" + $("#memberPhone").val();
+function getAccount() {
+
+    //localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");                                                       //for testing
+    //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
+    //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
+    
+
+    var paramItems = "";
+    if (localStorage.fcemcOMS_MEM_did == undefined) {
+        paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/none/none/none";
+    }
+    else {
+        paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
+    }
+
+
+    var paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
@@ -50,12 +71,12 @@ function getAccount() {
         success: function (result) {
             var results = result.VALMEMBERResult;
             if (results.length == 0) {
-                $("#memberNumber").val("");                
+                $("#memberNumber").val("");
                 navigator.notification.alert("There is an issue with you account, unalbe to add account. Please contact Four County EMC for assistance at 1-888.368.7289", "", "Error:", "Ok");
             }
             else if (results.length > 0) {
                 memberData = [];
-                
+
                 for (var i = 0; i < results.length; i++) {
                     memberData.push({ NAME: results[i].NAME, MEMBERNO: results[i].MEMBERNO, MEMBERSEP: results[i].MEMBERSEP, BILLADDR: results[i].BILLADDR, SERVADDR: results[i].SERVADDR, PHONE: results[i].PHONE, MAPNUMBER: results[i].MAPNUMBER, METER: results[i].METER });
                 }
@@ -79,35 +100,7 @@ function getAccount() {
 function setCookie() {
     ////window.localStorage.clear();
     localStorage.setItem("fcemcMemberData", "");
-    localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));
-    //registierDevice();
-}
-
-function registierDevice() {
-    localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");
-    localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")
-    localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");
-
-    if (localStorage.fcemcOMS_MEM_did != undefined) {
-        var _did = localStorage.fcemcOMS_MEM_did;
-        var _uuid = localStorage.fcemcOMS_MEM_uuid;
-        var _ct = localStorage.fcemcOMS_MEM_clientType;
-
-        var paramItems = _did + "|" + _uuid + "|" + _ct;
-        $.ajax({
-            type: "GET",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGDEVICE/" + paramItems,
-            contentType: "application/json; charset=utf-8",
-            cache: false,
-            success: function (results) {
-                var r = results;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                var e = errorThrown;                
-            }
-        });
-
-    }
+    localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));   
 }
 
 function getCookie() {
@@ -340,4 +333,4 @@ function networkIssue(button) {
     }
 }
 
-function fakeCallback(){}
+function fakeCallback() { }
