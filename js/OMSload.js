@@ -317,6 +317,7 @@ function doClearAccount(button) {
         localStorage.clear();
         $("#memberNumber").val("");
         $("#memberPhone").val("");
+        location.reload();
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
 }
