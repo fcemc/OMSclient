@@ -57,7 +57,8 @@ function onDeviceReady() {
 }
 
 function onResume() {
-    window.location.reload();
+    //window.location.reload();
+    initLoad();
 }
 
     // handle APNS notifications for iOS
