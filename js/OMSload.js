@@ -49,12 +49,17 @@ function getAccount() {
     //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
     //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
     
+    if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {
+        localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
+        localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
+    }
+    
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
-        paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/none/none/none";
+        paramItems = + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
     }
     else {
-        paramItems = $("#memberNumber").val() + "/" + $("#memberPhone").val() + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
+        paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
     }
             
     $.ajax({
