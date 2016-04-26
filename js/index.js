@@ -58,10 +58,12 @@ function onDeviceReady() {
 
 function onResume() {    
     $(":button").each(function () {
-        if ($(this).prop('disabled') == "true") {
-            getAccount();
-            return false;
-        }        
+        if ($(this).attr('id').includes("btn_")) {
+            if ($(this).prop('disabled') == true) {
+                getAccount();
+                return false;
+            }
+        }
     });
 }
 
