@@ -57,8 +57,7 @@ function onDeviceReady() {
 }
 
 function onResume() {
-    //window.location.reload();
-    initLoad();
+    getAccount();
 }
 
     // handle APNS notifications for iOS
