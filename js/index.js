@@ -71,7 +71,7 @@ function onResume() {
 function onNotificationAPN(e) {
     if (e.alert) {
         // showing an alert also requires the org.apache.cordova.dialogs plugin
-        navigator.notification.alert(e.alert);
+        navigator.notification.alert(e.alert, fakeCallback,"APN Error","onNotificationAPN");
     }
 
     if (e.sound) {
