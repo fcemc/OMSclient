@@ -75,7 +75,7 @@ function getAccount() {
             var results = result.VALMEMBERResult;
             if (results.length == 0) {
                 //$("#memberNumber").val("");
-                navigator.notification.alert("There is an issue with your account, unable to add account. Please contact Four County EMC for assistance at 1-888.368.7289", fakeCallback, "Error:", "Ok");
+                navigator.notification.alert("There is an issue with your account, unable to add account. Please contact Four County EMC for assistance at 1-888-368-7289", fakeCallback, "Error:", "Ok");
             }
             else if (results.length > 0) {
                 memberData = [];
@@ -93,7 +93,7 @@ function getAccount() {
             $("#spinCont").hide();
         },
         error: function (textStatus, errorThrown) {
-            navigator.notification.alert("There was an issue in pulling up your account information, please try again or contact Four County EMC for assistance at 1-888.368.7289", fakeCallback, "Error:", "Ok");
+            navigator.notification.alert("There was an issue in pulling up your account information, please try again or contact Four County EMC for assistance at 1-888-368-7289", fakeCallback, "Error:", "Ok");
             var txt = textStatus;
             var et = errorThrown;
         }
