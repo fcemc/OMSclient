@@ -54,6 +54,17 @@ function getAccount() {
         localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
         localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
     }
+    else {
+
+        if (localStorage.fcemcOMS_MEM_mbrnum != $("#memberNumber").val()) {
+            localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
+        }
+        if (localStorage.fcemcOMS_MEM_mbrphone != $("#memberPhone").val()) {
+            localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
+        }
+    }
+
+
     
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
