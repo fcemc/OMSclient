@@ -60,7 +60,7 @@ function onResume() {
     $(":button").each(function () {
         if ($(this).attr('id').includes("btn_")) {
             if ($(this).prop('disabled') == true) {
-                getAccount();
+                checkCookie();
                 return false;
             }
         }
