@@ -50,7 +50,7 @@ function getAccount() {
     //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
     //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
     
-    if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {
+    if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {                            
         localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
         localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
     }
@@ -63,9 +63,7 @@ function getAccount() {
             localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
         }
     }
-
-
-    
+        
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
         paramItems = + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
@@ -84,19 +82,16 @@ function getAccount() {
         },
         success: function (result) {
             var results = result.VALMEMBERResult;
-            if (results.length == 0) {
-                //$("#memberNumber").val("");
+            if (results.length == 0) {                
                 navigator.notification.alert("There is an issue with your account, unable to add account. Please contact Four County EMC for assistance at 1-888-368-7289", fakeCallback, "Error:", "Ok");
             }
             else if (results.length > 0) {
                 memberData = [];
-
                 for (var i = 0; i < results.length; i++) {
                     memberData.push({ NAME: results[i].NAME, MEMBERNO: results[i].MEMBERNO, MEMBERSEP: results[i].MEMBERSEP, BILLADDR: results[i].BILLADDR, SERVADDR: results[i].SERVADDR, PHONE: results[i].PHONE, MAPNUMBER: results[i].MAPNUMBER, METER: results[i].METER });
                 }
 
                 setCookie();
-
                 listAccounts();
             }
         },
@@ -104,9 +99,10 @@ function getAccount() {
             $("#spinCont").hide();
         },
         error: function (textStatus, errorThrown) {
+            localStorage.setItem("fcemcOMS_MEM_mbrnum", "");
+            localStorage.setItem("fcemcOMS_MEM_mbrphone", "");
             navigator.notification.alert("There was an issue in pulling up your account information, please try again or contact Four County EMC for assistance at 1-888-368-7289", fakeCallback, "Error:", "Ok");
-            var txt = textStatus;
-            var et = errorThrown;
+            $.mobile.pageContainer.pagecontainer("change", "#page2");
         }
     });
 }
@@ -331,7 +327,7 @@ function clearAccount() {
 
 function doClearAccount(button) {
     if (button == 2) {
-        localStorage.clear();
+        //localStorage.clear();
         $("#memberNumber").val("");
         $("#memberPhone").val("");
         location.reload();
