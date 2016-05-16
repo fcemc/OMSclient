@@ -221,7 +221,7 @@ function checkInOutage() {
                             
                             $('#btn_' + data[i].MEMBERSEP).text("Account in Current Outage")
                             $('#btn_' + data[i].MEMBERSEP).prop('disabled', true).addClass('ui-disabled');
-                            $("#status_" + data[i].MEMBERSEP).html("Message: " + r[0].status);
+                            $("#status_" + data[i].MEMBERSEP).html("<b>Message:</b> " + r[0].status);
                         }
 
                     }
@@ -300,6 +300,9 @@ function sendReportedOutage() {
                 navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification", "Ok");
                 $("#spinCont").hide();
             }
+        },
+        complete: function (jqXHR, textStatus) {
+            checkInOutage();
         }
     });
 }
@@ -349,45 +352,45 @@ function doClearAccount(button) {
     }
 }
 
-function checkStatus(oD) {
-    $("#spinCont").show();
-    clearOutageRecords();
+//function checkStatus(oD) {
+//    $("#spinCont").show();
+//    clearOutageRecords();
 
-    $.ajax({
-        type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
-        contentType: "application/json; charset=utf-8",
-        cache: false,
-        success: function (results) {
-            var res = results.getOutageEventInfoResult;
+//    $.ajax({
+//        type: "GET",
+//        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
+//        contentType: "application/json; charset=utf-8",
+//        cache: false,
+//        success: function (results) {
+//            var res = results.getOutageEventInfoResult;
 
-            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
+//            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
 
-            var upstreamIDs = res.upstreamIDs;
-            $("#select-upstream option").remove();
-            for (i = 1; i < upstreamIDs.length; i++) {
-                $("#select-upstream").append($('<option/>', {
-                    value: upstreamIDs[i],
-                    text: upstreamIDs[i]
-                }));
-            }
+//            var upstreamIDs = res.upstreamIDs;
+//            $("#select-upstream option").remove();
+//            for (i = 1; i < upstreamIDs.length; i++) {
+//                $("#select-upstream").append($('<option/>', {
+//                    value: upstreamIDs[i],
+//                    text: upstreamIDs[i]
+//                }));
+//            }
 
-            $("#page2").on("pagebeforeshow", function (event) {
-                $("#confrimLbl").text("");
-                $("#confrimLbl").text(outageDevice + " on " + res.outageEventPhase + " Phase");
-                $("#select-upstream").val("0").change();
-                $("#select-phase").val("0").change();
-            });
-            $.mobile.pageContainer.pagecontainer("change", "#page2");
-            $("#tabs").tabs("option", "active", 0);
-            $('#tab-one').addClass("ui-btn-active");
+//            $("#page2").on("pagebeforeshow", function (event) {
+//                $("#confrimLbl").text("");
+//                $("#confrimLbl").text(outageDevice + " on " + res.outageEventPhase + " Phase");
+//                $("#select-upstream").val("0").change();
+//                $("#select-phase").val("0").change();
+//            });
+//            $.mobile.pageContainer.pagecontainer("change", "#page2");
+//            $("#tabs").tabs("option", "active", 0);
+//            $('#tab-one').addClass("ui-btn-active");
 
-        },
-        complete: function (jqXHR, textStatus) {
-            $("#spinCont").hide();
-        }
-    });
-}
+//        },
+//        complete: function (jqXHR, textStatus) {
+//            $("#spinCont").hide();
+//        }
+//    });
+//}
 
 function networkIssue(button) {
     if (button == 2) {
