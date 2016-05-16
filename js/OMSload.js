@@ -46,9 +46,9 @@ $(document).ready(function () {
 //region Login&Cookies
 function getAccount() {
 
-    localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");                                                       //for testing
-    localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
-    localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
+    //localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");                                                       //for testing
+    //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
+    //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
 
     if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {
         localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
@@ -247,7 +247,7 @@ function ouatageSumissionCallBack(button) {
         sendReportedOutage();
     }
     else if (button == 1) {
-        cancelOtage();
+        $.mobile.pageContainer.pagecontainer("change", "#page1");
         $("#spinCont").hide();
     }
 }
@@ -334,10 +334,6 @@ function getSpinner() {
     spinner = new Spinner(opts).spin(target);
 }
 
-function cancelOtage() {
-    $.mobile.pageContainer.pagecontainer("change", "#page1");
-}
-
 function clearAccount() {
     navigator.notification.confirm("Do you want to remove this account?", doClearAccount, "Remove account:", "Cancel, Ok");
 }
@@ -347,7 +343,8 @@ function doClearAccount(button) {
         //localStorage.clear();
         $("#memberNumber").val("");
         $("#memberPhone").val("");
-        location.reload();
+        //location.reload();
+        localStorage.setItem("fcemcMemberData", "");
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
 }
