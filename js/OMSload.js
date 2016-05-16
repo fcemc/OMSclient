@@ -46,11 +46,11 @@ $(document).ready(function () {
 //region Login&Cookies
 function getAccount() {
 
-    //localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");                                                       //for testing
-    //localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
-    //localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
-    
-    if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {                            
+    localStorage.setItem("fcemcOMS_MEM_clientType", "iOS");                                                       //for testing
+    localStorage.setItem("fcemcOMS_MEM_did", "ed472bbdfc5ce6d7cf4ab706d6f35b4ba21b91e6409a1b841b093df9a6c88c5d")  //for testing
+    localStorage.setItem("fcemcOMS_MEM_uuid", "390453708262");                                                    //for testing
+
+    if (localStorage.fcemcOMS_MEM_mbrnum == undefined) {
         localStorage.setItem("fcemcOMS_MEM_mbrnum", $("#memberNumber").val());
         localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
     }
@@ -63,7 +63,7 @@ function getAccount() {
             localStorage.setItem("fcemcOMS_MEM_mbrphone", $("#memberPhone").val());
         }
     }
-        
+
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
         paramItems = + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
@@ -71,7 +71,7 @@ function getAccount() {
     else {
         paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
     }
-            
+
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
@@ -82,7 +82,7 @@ function getAccount() {
         },
         success: function (result) {
             var results = result.VALMEMBERResult;
-            if (results.length == 0) {                
+            if (results.length == 0) {
                 navigator.notification.alert("There is an issue with your account, unable to add account. Please contact Four County EMC for assistance at 1-888-368-7289", fakeCallback, "Error:", "Ok");
             }
             else if (results.length > 0) {
@@ -110,7 +110,7 @@ function getAccount() {
 function setCookie() {
     ////window.localStorage.clear();
     localStorage.setItem("fcemcMemberData", "");
-    localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));   
+    localStorage.setItem("fcemcMemberData", JSON.stringify(memberData));
 }
 
 function getCookie() {
@@ -153,6 +153,7 @@ function listAccounts() {
         _string += '<div class="accdEntry"><b>Site Address :</b> ' + data[0].SERVADDR + '</div>';
         _string += '<div class="accdEntry"><b>Map Number:</b> ' + data[0].MAPNUMBER + '</div>';
         _string += '<div class="accdEntry"><b>Phone Number:</b> ' + data[0].PHONE + '</div>';
+        _string += '<div id="status_' + data[0].MEMBERSEP + '" class="mssgEntry"></div>';
 
         _string += '<div><button id="btn_' + data[0].MEMBERSEP + '" style="background-color:red;" onclick="reportmOtage(\'' + data[0].MEMBERSEP + ',' + data[0].METER + ',' + data[0].PHONE + ',' + data[0].MAPNUMBER + ',' + 'Send from OMS outage app Power Out\');" class="ui-btn ui-corner-all">Report Outage</button></div>';
 
@@ -177,6 +178,7 @@ function listAccounts() {
             _string += "<div class='accdEntry'><b>Site Address :</b> " + data[i].SERVADDR + "</div>";
             _string += "<div class='accdEntry'><b>Map Number:</b> " + data[i].MAPNUMBER + "</div>";
             _string += "<div class='accdEntry'><b>Phone Number:</b> " + data[i].PHONE + "</div>";
+            _string += '<div id="status_' + data[0].MEMBERSEP + '" class="mssgEntry"></div>';
             _string += '<div><button id="btn_' + data[i].MEMBERSEP + '" style="background-color:red;" onclick="reportmOtage(\'' + data[i].MEMBERSEP + ',' + data[i].METER + ',' + data[i].PHONE + ',' + data[i].MAPNUMBER + ',' + 'Send from OMS outage app Power Out\');" class="ui-btn ui-corner-all">Report Outage</button></div>';
             _string += "</div>";
         }
@@ -199,26 +201,38 @@ function listAccounts() {
 }
 
 function checkInOutage() {
+    $("#spinCont").show();
+
     $.ajax({
         type: "GET",
-        async: false,
-        cache: false,
-        dataType: "json",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGEACCOUNTS",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
         success: function (results) {
             var r = results.getOUTAGEACCOUNTSResult;
+
             if (r.length > 0) {
                 var data = JSON.parse(localStorage.getItem("fcemcMemberData"));
                 for (i = 0; i < data.length; i++) {
-                    if (jQuery.inArray(data[i].MEMBERSEP, r) > -1) {
-                        $('#btn_' + data[i].MEMBERSEP).text("Account in Current Outage")
-                        $('#btn_' + data[i].MEMBERSEP).prop('disabled', true).addClass('ui-disabled');
+                    var mbrsep = data[i].MEMBERSEP;
+
+                    for (a = 0; a < r.length; a++) {
+                        if(mbrsep ==  r[a].mbrNum){
+                            
+                            $('#btn_' + data[i].MEMBERSEP).text("Account in Current Outage")
+                            $('#btn_' + data[i].MEMBERSEP).prop('disabled', true).addClass('ui-disabled');
+                            $("#status_" + data[i].MEMBERSEP).html("Message: " + r[0].status);
+                        }
 
                     }
                 }
             }
+        },
+        complete: function (jqXHR, textStatus) {
+            $("#spinCont").hide();
         }
     });
+
 }
 
 function reportmOtage(info) {
@@ -333,6 +347,46 @@ function doClearAccount(button) {
         location.reload();
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
+}
+
+function checkStatus(oD) {
+    $("#spinCont").show();
+    clearOutageRecords();
+
+    $.ajax({
+        type: "GET",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (results) {
+            var res = results.getOutageEventInfoResult;
+
+            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
+
+            var upstreamIDs = res.upstreamIDs;
+            $("#select-upstream option").remove();
+            for (i = 1; i < upstreamIDs.length; i++) {
+                $("#select-upstream").append($('<option/>', {
+                    value: upstreamIDs[i],
+                    text: upstreamIDs[i]
+                }));
+            }
+
+            $("#page2").on("pagebeforeshow", function (event) {
+                $("#confrimLbl").text("");
+                $("#confrimLbl").text(outageDevice + " on " + res.outageEventPhase + " Phase");
+                $("#select-upstream").val("0").change();
+                $("#select-phase").val("0").change();
+            });
+            $.mobile.pageContainer.pagecontainer("change", "#page2");
+            $("#tabs").tabs("option", "active", 0);
+            $('#tab-one').addClass("ui-btn-active");
+
+        },
+        complete: function (jqXHR, textStatus) {
+            $("#spinCont").hide();
+        }
+    });
 }
 
 function networkIssue(button) {
