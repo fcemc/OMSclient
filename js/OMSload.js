@@ -69,7 +69,7 @@ function getAccount() {
         paramItems = + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
     }
     else {
-        paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/" + localStorage.fcemcOMS_MEM_did + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
+        paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/" + encodeURIComponent(localStorage.fcemcOMS_MEM_did) + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
     }
 
     $.ajax({
