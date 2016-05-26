@@ -150,7 +150,7 @@ function listAccounts() {
         _string += '<div class="accdEntry"><b>Member Number:</b> ' + data[0].MEMBERNO + '</div>';
         _string += '<div class="accdEntry"><b>Member SEP:</b> ' + data[0].MEMBERSEP + '</div>';
         _string += '<div class="accdEntry"><b>Meter Number:</b> ' + data[0].METER + '</div>';
-        _string += '<div class="accdEntry"><b>Site Address :</b> ' + data[0].SERVADDR + '</div>';
+        _string += '<div class="accdEntry"><b>Site Address:</b> ' + data[0].SERVADDR + '</div>';
         _string += '<div class="accdEntry"><b>Map Number:</b> ' + data[0].MAPNUMBER + '</div>';
         _string += '<div class="accdEntry"><b>Phone Number:</b> ' + data[0].PHONE + '</div>';
         _string += '<div id="status_' + data[0].MEMBERSEP + '" class="mssgEntry"></div>';
@@ -175,11 +175,11 @@ function listAccounts() {
             _string += "<div class='accdEntry'><b>Member Number:</b> " + data[i].MEMBERNO + "</div>";
             _string += "<div class='accdEntry'><b>Member SEP:</b> " + data[i].MEMBERSEP + "</div>";
             _string += "<div class='accdEntry'><b>Meter Number:</b> " + data[i].METER + "</div>";
-            _string += "<div class='accdEntry'><b>Site Address :</b> " + data[i].SERVADDR + "</div>";
+            _string += "<div class='accdEntry'><b>Site Address:</b> " + data[i].SERVADDR + "</div>";
             _string += "<div class='accdEntry'><b>Map Number:</b> " + data[i].MAPNUMBER + "</div>";
             _string += "<div class='accdEntry'><b>Phone Number:</b> " + data[i].PHONE + "</div>";
             _string += '<div id="status_' + data[0].MEMBERSEP + '" class="mssgEntry"></div>';
-            _string += '<div><button id="btn_' + data[i].MEMBERSEP + '" style="background-color:red;" onclick="reportmOtage(\'' + data[i].MEMBERSEP + ',' + data[i].METER + ',' + data[i].PHONE + ',' + data[i].MAPNUMBER + ',' + 'Send from OMS outage app Power Out\');" class="ui-btn ui-corner-all">Report Outage</button></div>';
+            _string += '<div><button id="btn_' + data[i].MEMBERSEP + '" style="background-color:red;" onclick="reportmOtage(\'' + data[i].MEMBERSEP + ',' + data[i].METER + ',' + data[i].PHONE + ',' + data[i].MAPNUMBER + ',' + 'Sent from OMS outage app Power Out\');" class="ui-btn ui-corner-all">Report Outage</button></div>';
             _string += "</div>";
         }
         _string += "</div>";
@@ -297,7 +297,7 @@ function sendReportedOutage() {
             else {
                 $('#btn_' + account).text("Account in Current Outage")
                 $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification", "Ok");
+                navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification:", "Ok");
                 $("#spinCont").hide();
             }
         },
