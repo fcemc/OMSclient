@@ -63,7 +63,7 @@
         <preference name="phonegap-version"       value="3.5.0" />
     -->
   
-  <preference name="phonegap-version" value="cli-6.3.0" />
+  <preference name="phonegap-version" value="cli-6.4.0" />
   <!-- Plugins -->
 
   <!-- Core plugins -->
