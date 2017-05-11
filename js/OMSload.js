@@ -74,7 +74,7 @@ function getAccount() {
 
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
         contentType: "application/json; charset=utf-8",
         cache: false,
         beforeSend: function () {
@@ -205,7 +205,7 @@ function checkInOutage() {
 
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGEACCOUNTS",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGEACCOUNTS",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -286,7 +286,7 @@ function sendReportedOutage() {
         async: false,
         cache: false,
         dataType: "json",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
         success: function (results) {
             if (results.REPORTOUTAGEResult == true) {
                 $('#btn_' + account).text("Account in Current Outage")
@@ -355,7 +355,7 @@ function doClearAccount(button) {
 
 //    $.ajax({
 //        type: "GET",
-//        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
+//        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
 //        contentType: "application/json; charset=utf-8",
 //        cache: false,
 //        success: function (results) {
