@@ -63,22 +63,13 @@
         <preference name="phonegap-version"       value="3.5.0" />
     -->
   
-  <preference name="phonegap-version" value="cli-7.0.1" />
+  <preference name="phonegap-version" value="cli-6.5.0" />
   <!-- Plugins -->
 
   <!-- Core plugins -->
-  <!--<plugin name="org.apache.cordova.battery-status" />
-  <plugin name="org.apache.cordova.camera" />
-  <plugin name="org.apache.cordova.media-capture" />
-  <plugin name="org.apache.cordova.console" />-->
-  <!--<plugin name="org.apache.cordova.contacts" />
-  <plugin name="org.apache.cordova.device" />-->
-  <plugin name="cordova-plugin-device" spec="~1.1.6" />
-  <!--<plugin name="org.apache.cordova.device-motion" />-->
+  <plugin name="cordova-plugin-device" spec="~1.1.6" />  
   <plugin name="cordova-plugin-device-motion" spec="~1.2.5" />
-  <!--<plugin name="org.apache.cordova.device-orientation" />-->
   <plugin name="cordova-plugin-device-orientation" spec="~1.0.7" />
-  <!--<plugin name="org.apache.cordova.dialogs" />-->
   <plugin name="cordova-plugin-dialogs" spec="~1.3.3" />
   <plugin name="cordova-plugin-geolocation" spec="~2.4.3" />
   <plugin name="cordova-plugin-media" spec="~3.0.1" />
