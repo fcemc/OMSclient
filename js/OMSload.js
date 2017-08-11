@@ -39,7 +39,9 @@ $(document).ready(function () {
 
     }
     else {
-        navigator.notification.confirm("No network connection detected, check setting and try again!", networkIssue, "Please Confirm:", "Cancel, Ok");
+        if (navigator.notification != undefined) {
+            navigator.notification.confirm("No network connection detected, check setting and try again!", networkIssue, "Please Confirm:", "Cancel, Ok");
+        }
     }
 });
 
@@ -66,7 +68,7 @@ function getAccount() {
 
     var paramItems = "";
     if (localStorage.fcemcOMS_MEM_did == undefined) {
-        paramItems = + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
+        paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/none/none/none";
     }
     else {
         paramItems = localStorage.fcemcOMS_MEM_mbrnum + "/" + localStorage.fcemcOMS_MEM_mbrphone + "/" + encodeURIComponent(localStorage.fcemcOMS_MEM_did) + "/" + localStorage.fcemcOMS_MEM_uuid + "/" + localStorage.fcemcOMS_MEM_clientType;
@@ -75,7 +77,7 @@ function getAccount() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         beforeSend: function () {
             $("#spinCont").show();
@@ -206,7 +208,7 @@ function checkInOutage() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGEACCOUNTS",
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var r = results.getOUTAGEACCOUNTSResult;
@@ -239,7 +241,12 @@ function reportmOtage(info) {
     $("#spinCont").show();
     outageInfo = "";
     outageInfo = info;
-    navigator.notification.confirm("Do you want to report an outage at this location?", ouatageSumissionCallBack, "Please Confirm:", "Cancel, Ok");
+    if (navigator.notification != undefined) {
+        navigator.notification.confirm("Do you want to report an outage at this location?", ouatageSumissionCallBack, "Please Confirm:", "Cancel, Ok");
+    }
+    else {
+        ouatageSumissionCallBack(2);
+    }
 }
 
 function ouatageSumissionCallBack(button) {
@@ -288,7 +295,7 @@ function sendReportedOutage() {
         dataType: "json",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REPORTOUTAGE/" + details,
         success: function (results) {
-            if (results.REPORTOUTAGEResult == true) {
+            if (results.REPORTOUTAGEResult.length == 0) {
                 $('#btn_' + account).text("Account in Current Outage")
                 $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
                 navigator.notification.alert("Outage has been reported!", fakeCallback, "Success:", "Ok");
@@ -297,12 +304,17 @@ function sendReportedOutage() {
             else {
                 $('#btn_' + account).text("Account in Current Outage")
                 $('#btn_' + account).prop('disabled', true).addClass('ui-disabled');
-                navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification:", "Ok");
+                if (navigator.notification != undefined) {
+                    navigator.notification.alert("Account already in an existing outage", fakeCallback, "Notification:", "Ok");
+                }
                 $("#spinCont").hide();
             }
         },
         complete: function (jqXHR, textStatus) {
             checkInOutage();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            var t = textStatus;
         }
     });
 }
@@ -335,7 +347,12 @@ function getSpinner() {
 }
 
 function clearAccount() {
-    navigator.notification.confirm("Do you want to remove this account?", doClearAccount, "Remove account:", "Cancel, Ok");
+    if (navigator.notification != undefined) {
+        navigator.notification.confirm("Do you want to remove this account?", doClearAccount, "Remove account:", "Cancel, Ok");
+    }
+    else {
+        doClearAccount(2);
+    }
 }
 
 function doClearAccount(button) {
@@ -348,46 +365,6 @@ function doClearAccount(button) {
         $.mobile.pageContainer.pagecontainer("change", "#page2");
     }
 }
-
-//function checkStatus(oD) {
-//    $("#spinCont").show();
-//    clearOutageRecords();
-
-//    $.ajax({
-//        type: "GET",
-//        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
-//        contentType: "application/json; charset=utf-8",
-//        cache: false,
-//        success: function (results) {
-//            var res = results.getOutageEventInfoResult;
-
-//            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
-
-//            var upstreamIDs = res.upstreamIDs;
-//            $("#select-upstream option").remove();
-//            for (i = 1; i < upstreamIDs.length; i++) {
-//                $("#select-upstream").append($('<option/>', {
-//                    value: upstreamIDs[i],
-//                    text: upstreamIDs[i]
-//                }));
-//            }
-
-//            $("#page2").on("pagebeforeshow", function (event) {
-//                $("#confrimLbl").text("");
-//                $("#confrimLbl").text(outageDevice + " on " + res.outageEventPhase + " Phase");
-//                $("#select-upstream").val("0").change();
-//                $("#select-phase").val("0").change();
-//            });
-//            $.mobile.pageContainer.pagecontainer("change", "#page2");
-//            $("#tabs").tabs("option", "active", 0);
-//            $('#tab-one').addClass("ui-btn-active");
-
-//        },
-//        complete: function (jqXHR, textStatus) {
-//            $("#spinCont").hide();
-//        }
-//    });
-//}
 
 function networkIssue(button) {
     if (button == 2) {
