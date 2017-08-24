@@ -37,8 +37,8 @@
     <div class="pg" data-role="page" id="page1">
         <div class="hdr" data-role="header">
             <h1>Account Detail </h1>
-            <a onclick="clearAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"></a>
-            <a onclick="updateAccount();" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-recycle ui-btn-icon-right ui-btn-icon-notext ui-corner-all"></a>
+            <a id="clearAccnt" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all"></a>
+            <a id="updateAccnt" style="background-color:gainsboro;" href="#" class="ui-btn ui-icon-recycle ui-btn-icon-right ui-btn-icon-notext ui-corner-all"></a>
         </div>
         <div role="main" class="ui-content">
             <div style="text-align:center;">
@@ -54,8 +54,8 @@
         <div role="main" class="ui-content">
             <div style="text-align:center;">
                 Enter Member Number: <input id="memberNumber" type="number" />
-                Enter Phone Number (Ex:9102591234): <input id="memberPhone" type="number" />
-                <input type="button" value="Submit" onclick="getAccount();" />
+                Enter Phone Number (Ex:9102591234): <input id="memberPhone" type="number" />                
+                <input id="findMember" type="button" value="Submit" />
             </div>
         </div>
     </div>
