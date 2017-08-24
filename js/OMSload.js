@@ -8,6 +8,12 @@ $(document).ready(function () {
     ////$("#memberNumber").val("57578");    //for testing
     ////$("#memberPhone").val("9105322881");//for testing
 
+
+    $("#findMember").on("click", getAccount);
+    $("#clearAccnt").on("click", clearAccount);
+    $("#updateAccnt").on("click", updateAccount);
+
+
     //adjust for status bar in iOS
     if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
         $("body").css("background-color", "black");
