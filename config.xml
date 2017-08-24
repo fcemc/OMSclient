@@ -189,7 +189,7 @@
 <allow-navigation href="data:*" />
 
   <access origin="*"/>
-  <access origin="https://gis.fourcty.org" subdomains="true" />
+  <access origin="https://*.gis.fourcty.org" subdomains="true" />
   
   <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
   <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
