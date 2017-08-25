@@ -82,7 +82,7 @@ function getAccount() {
 
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/VALMEMBER/" + paramItems,
         cache: false,
         beforeSend: function () {
             $("#spinCont").show();
