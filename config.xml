@@ -157,7 +157,8 @@
     <application android:theme="@android:style/Theme.NoTitleBar" />      
   </gap:config-file>
   
-  <allow-navigation href="http://gis.fourcty.org/*" />
+  <allow-navigation href="https://gis.fourcty.org/*" />
+  <allow-navigation href="*://*.gis.fourcty.org/*" />
   
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
