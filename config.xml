@@ -59,7 +59,7 @@
   <preference name="android-build-tool" value="gradle" />
 
   <preference name="phonegap-version" value="cli-7.0.1" />
-  <preference name='pgb-builder-version' value='1' />
+  <!--<preference name='pgb-builder-version' value='1' />-->
   
   <!-- Plugins -->
 
@@ -84,6 +84,7 @@
   <plugin name="cordova-plugin-vibration" spec="~2.1.5" />
   <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
   <plugin name="cordova-plugin-whitelist" spec="~1.3.2" />
+  <plugin name="cordova-plugin-transport-security" />
   
   <plugin name="phonegap-plugin-push" spec="1.6.0">
     <param name="SENDER_ID" value="18994795059" />
@@ -156,7 +157,10 @@
            android:smallScreens="false" />
     <application android:theme="@android:style/Theme.NoTitleBar" />      
   </gap:config-file>
-  
+
+  <access origin='*' allows-arbitrary-loads-in-media='true' allows-arbitrary-loads-in-web-content='true' allows-local-networking='true' />
+  <!--<access origin="*"/>-->
+
   <allow-navigation href="https://gis.fourcty.org/*" />
   <allow-navigation href="*://*.gis.fourcty.org/*" />
   
@@ -166,8 +170,6 @@
   <allow-intent href="sms:*" />
   <allow-intent href="mailto:jerrysimmons@fourcty.org" />
   <allow-intent href="geo:*" />
-
-  <access origin="*"/>
  
 
     <platform name="android">
