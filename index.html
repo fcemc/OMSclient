@@ -8,7 +8,7 @@
     <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; script-src 'self' https://somedomain.com/ 'unsafe-inline' 'unsafe-eval';  media-src *">
     <meta http-equiv="Content-Security-Policy" content="default-src gap://ready file://* *; style-src 'self' http://* https://* 'unsafe-inline'; script-src 'self' http://* https://* 'unsafe-inline' 'unsafe-eval'">-->
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://gis.fourcty.org; connect-src 'self' https://gis.fourcty.org">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://gis.fourcty.org https://debug1.phonegap.com; connect-src 'self' https://gis.fourcty.org; script-src 'self' https://gis.fourcty.org https://debug1.phonegap.com; style-src 'self' https://gis.fourcty.org 'unsafe-inline'">
 
     <title>FCEMC-OMSClient</title>
 
@@ -24,8 +24,8 @@
 
     <link href="css/StyleSheet.css" rel="stylesheet" />
 
-    <script src="http://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
-    <script src="http://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
+    <script src="https://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="https://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
 
     <!--<script src="js/Push.js"></script>-->
     <script src="js/OMSload.js"></script>
