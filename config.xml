@@ -157,9 +157,9 @@
     <application android:theme="@android:style/Theme.NoTitleBar" />      
   </gap:config-file>
 
-  
+
   <allow-navigation href="https://gis.fourcty.org/*" />
-    
+
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
   <allow-intent href="tel:*" />
@@ -169,6 +169,7 @@
 
   <access origin="http://gis.fourcty.org" />
   <access origin="https://gis.fourcty.org" />
+  <access origin="http://phonegap.com" subdomains="true" />
 
     <platform name="android">
     <allow-intent href="market:*" />
