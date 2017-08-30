@@ -83,7 +83,7 @@
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.3" />
   <plugin name="cordova-plugin-vibration" spec="~2.1.5" />
   <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
-  <plugin name="cordova-plugin-whitelist" spec="~1.3.2" />
+  <plugin name="cordova-plugin-whitelist" spec="1" />
 
   <plugin name="phonegap-plugin-push" spec="1.6.0">
     <param name="SENDER_ID" value="18994795059" />
@@ -145,7 +145,7 @@
     <splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" height="1136" />
   </platform>
 
-  <gap:config-file platform="ios" parent="CFBundleShortVersionString">
+  <!--<gap:config-file platform="ios" parent="CFBundleShortVersionString">
     <string>1.0.4</string>
   </gap:config-file>
 
@@ -155,11 +155,9 @@
            android:largeScreens="false"
            android:smallScreens="false" />
     <application android:theme="@android:style/Theme.NoTitleBar" />      
-  </gap:config-file>
+  </gap:config-file>-->
 
-
-  <allow-navigation href="https://gis.fourcty.org/*" />
-
+  <access origin="*" />  
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
   <allow-intent href="tel:*" />
@@ -167,26 +165,21 @@
   <allow-intent href="mailto:jerrysimmons@fourcty.org" />
   <allow-intent href="geo:*" />
 
-  <access origin="http://gis.fourcty.org" />
-  <access origin="https://gis.fourcty.org" />
-  <access origin="http://phonegap.com" subdomains="true" />
-
-    <platform name="android">
+  <platform name="android">
     <allow-intent href="market:*" />
+    
+    
   </platform>
   
   <platform name="ios">
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
-
-    
-      <edit-config target="NSAppTransportSecurity" mode="merge" file="*-Info.plist">
-        <dict>
-          <key>NSAllowsArbitraryLoads</key>
-          <true/>
-        </dict>
-      </edit-config>
-    
+    <edit-config target="NSAppTransportSecurity" mode="merge" file="*-Info.plist">
+      <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+      </dict>
+    </edit-config>
     
   </platform>
 
