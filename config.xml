@@ -178,6 +178,16 @@
   <platform name="ios">
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
+
+    
+      <edit-config target="NSAppTransportSecurity" mode="merge" file="*-Info.plist">
+        <dict>
+          <key>NSAllowsArbitraryLoads</key>
+          <true/>
+        </dict>
+      </edit-config>
+    
+    
   </platform>
 
 </widget>
