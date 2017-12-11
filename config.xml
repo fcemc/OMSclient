@@ -4,7 +4,7 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
 		xmlns:android   = "http://schemas.android.com/apk/res/android"
         id        = "com.fcemc.FCEMComsmember"
-        version   = "1.0.5">
+        version   = "1.0.6">
 
   <name>FCEMC-OMS Members</name>
 
@@ -85,7 +85,7 @@
   <plugin name="cordova-plugin-statusbar" spec="~2.2.3" />
   <plugin name="cordova-plugin-whitelist" spec="1" />
 
-  <plugin name="phonegap-plugin-push" spec="1.6.0">
+  <plugin name="phonegap-plugin-push" spec="1.9.0">
     <param name="SENDER_ID" value="18994795059" />
   </plugin>
 
@@ -96,12 +96,16 @@
     -->
 
   <!-- Define app icon for each platform. -->
-  <icon src="icon.png" />
-  <platform name="android">
-    <icon src="res/icon/android/icon-36-ldpi.png" qualifier="ldpi" />
-    <icon src="res/icon/android/icon-48-mdpi.png" qualifier="mdpi" />
-    <icon src="res/icon/android/icon-72-hdpi.png" qualifier="hdpi" />
-    <icon src="res/icon/android/icon-96-xhdpi.png" qualifier="xhdpi" />
+  
+   <platform name="android">    
+    <icon src="res/mipmap/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
+    <icon src="res/mipmap/icon-48-mdpi.png" platform="android" qualifier="mdpi" />
+    <icon src="res/mipmap/icon-72-hdpi.png" platform="android" qualifier="hdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
+    <icon src="res/mipmapd/icon-96-xhdpi.png" platform="android" qualifier="xxhdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="xxxhdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="fr-xxhdpi" />
+    <icon src="res/mipmap/icon.png" platform="android" />    
   </platform>
 
   <platform name="ios">
@@ -124,8 +128,8 @@
     <icon src="res/icon/ios/icon@2x.png" platform="ios" width="114" height="114" />
   </platform>
 
-  <splash src="splash.png" />
-  <platform name="android">
+    <splash src="splash.png" />
+  <platform name="android">    
     <splash src="res/screen/android/screen-ldpi-portrait.png" qualifier="port-ldpi" />
     <splash src="res/screen/android/screen-mdpi-portrait.png" qualifier="port-mdpi" />
     <splash src="res/screen/android/screen-hdpi-portrait.png" qualifier="port-hdpi" />
@@ -145,8 +149,8 @@
     <splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" height="1136" />
   </platform>
 
-  <!--<gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>1.0.4</string>
+  <gap:config-file platform="ios" parent="CFBundleShortVersionString">
+    <string>1.0.6</string>
   </gap:config-file>
 
   <gap:config-file platform="android" parent="/manifest">
@@ -155,7 +159,7 @@
            android:largeScreens="false"
            android:smallScreens="false" />
     <application android:theme="@android:style/Theme.NoTitleBar" />      
-  </gap:config-file>-->
+  </gap:config-file>
 
   <access origin="*" />  
   <allow-intent href="http://*/*" />
